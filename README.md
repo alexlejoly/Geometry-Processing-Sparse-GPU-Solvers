@@ -11,3 +11,9 @@ Make sure to use a python version >= 3.10.
 Perform `pip3 install -r requirements.txt`, making sure that pip is the one belonging to the right python.
 
 Then, install `torch` by running the command given on [PyTorch's website](https://pytorch.org/get-started/locally/) after selecting your desired options, making sure to select a CUDA version compatible with your device.
+
+## License
+
+Copyright (c) 2026 Alexandre Joly
+
+This project is licensed under the [MIT License](LICENSE).
