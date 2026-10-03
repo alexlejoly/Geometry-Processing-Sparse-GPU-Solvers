@@ -14,6 +14,4 @@ Then, install `torch` by running the command given on [PyTorch's website](https:
 
 ## License
 
-Copyright (c) 2026 Alexandre Joly
-
 This project is licensed under the [MIT License](LICENSE).
