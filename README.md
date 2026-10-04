@@ -8,14 +8,14 @@ Developped under the supervision of Prof. Sylvain Baillet at the Montréal Neuro
 
 Make sure to use a python version >= 3.10.
 
-Perform `pip3 install -r requirements.txt`, making sure that pip is the one belonging to the right python.
+Perform `python -m pip install -r requirements.txt`, making sure to use the correct python executable.
 
 Then, install `torch` by running the command given on [PyTorch's website](https://pytorch.org/get-started/locally/) after selecting your desired options, making sure to select a CUDA version compatible with your device.
 
 ## Running Solvers
 
 1. Make sure the root of the package has a `data.mat` file with the required operators.
-2. Perform `python -m src.solvers.{desired solver}` from the root of the package.
+2. Perform `python -m src.solvers.{desired solver}` from the root of the package, making sure to use the correct python executable.
 3. Find the produced `result.mat` file at the root of the package, making sure to save it elsewhere if needed, since calling another solver rewrites the file.
 
 ## License
