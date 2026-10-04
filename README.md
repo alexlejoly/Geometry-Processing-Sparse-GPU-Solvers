@@ -6,8 +6,8 @@ Developped under the supervision of Prof. Sylvain Baillet at the Montréal Neuro
 
 ## Installation of dependencies
 
-1. Make sure to use a python version >= 3.10. If not, install a suitable python version or create a suitable python virtual environment.
-2. Perform `python -m pip install -r requirements.txt`, making sure to use the correct python executable.
+1. Make sure to use a python version >= 3.10.
+2. Perform `python -m pip install -r requirements.txt` from the root of the package, making sure to use the correct python executable.
 3. Then, install `torch` by running the command given on [PyTorch's website](https://pytorch.org/get-started/locally/) after selecting your desired options, making sure to select a CUDA version compatible with your device, to replace `pip3` with `python -m pip`, and to use the correct python executable.
 
 ## Running Solvers
