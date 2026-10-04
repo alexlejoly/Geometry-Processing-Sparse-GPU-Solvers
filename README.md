@@ -1,7 +1,7 @@
 # Geometry Processing Sparse GPU Solvers
-Python Library of Sparse GPU Solvers for Geometry Processing developped in the context of the [COMP 401 course](https://coursecatalogue.mcgill.ca/archive/2025-2026/courses/comp-401/index.html) at McGill University, Montréal, QC (Project in Computer Science and Biology).
+Python Library of Sparse GPU Solvers for Geometry Processing developed in the context of the [COMP 401 course](https://coursecatalogue.mcgill.ca/archive/2025-2026/courses/comp-401/index.html) at McGill University, Montréal, QC (Project in Computer Science and Biology).
 
-Developped under the supervision of Prof. Sylvain Baillet at the Montréal Neurological Institute-Hospital.
+Developed under the supervision of Prof. Sylvain Baillet at the Montréal Neurological Institute-Hospital.
 
 ## About
 Multiple mesh geometry processing algorithms can be extremely useful for the study of dynamic brain activity. However, in our case, the ones that were targeted for acceleration for the needs of Brainstorm were the scalar Poisson equation, the heat method for geodesic distance, Hodge decomposition for vector fields, and trivial connections for direction field design, all described and implemented for CPU in the geometry-processing-js repository. It is described as a “fast and flexible framework for 3D geometry processing [...]”, and was created by the Geometry Collective research group out of Carnegie Mellon University [1].
