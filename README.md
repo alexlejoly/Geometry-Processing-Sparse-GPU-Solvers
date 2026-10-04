@@ -1,5 +1,5 @@
 # Geometry Processing Sparse GPU Solvers
-Python Library of Sparse GPU Solvers for Geometry Processing developped in the context of the COMP 401 course at McGill University, Montréal, QC (Project in Computer Science and Biology).
+Python Library of Sparse GPU Solvers for Geometry Processing developped in the context of the [COMP 401 course](https://coursecatalogue.mcgill.ca/archive/2025-2026/courses/comp-401/index.html) at McGill University, Montréal, QC (Project in Computer Science and Biology).
 
 Developped under the supervision of Prof. Sylvain Baillet at the Montréal Neurological Institute-Hospital.
 
