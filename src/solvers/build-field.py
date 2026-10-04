@@ -1,5 +1,6 @@
 import torch
-import utils
+from .. import utils
+from scipy.io import savemat
 
 Mesh, alpha = utils.init('build-field')
 
@@ -14,4 +15,4 @@ result = {
     'field': field.cpu().numpy()
 }
 
-utils.savemat('result.mat', result)
+savemat('result.mat', result)

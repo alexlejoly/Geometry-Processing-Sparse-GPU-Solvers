@@ -1,5 +1,6 @@
 import torch
-import utils
+from .. import utils
+from scipy.io import savemat
 
 DEC, rho = utils.init('poisson')
 
@@ -18,4 +19,4 @@ result = {
     'phi': phi.cpu().numpy()
 }
 
-utils.savemat('result.mat', result)
+savemat('result.mat', result)

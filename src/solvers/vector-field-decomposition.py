@@ -1,4 +1,5 @@
-import utils
+from .. import utils
+from scipy.io import savemat
 
 Mesh, DEC, omega = utils.init('vector-field-decomposition')
 
@@ -19,4 +20,4 @@ result = {
     'deltaBeta': deltaBeta.cpu().numpy()
 }
 
-utils.savemat('result.mat', result)
+savemat('result.mat', result)

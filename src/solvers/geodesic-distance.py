@@ -1,5 +1,6 @@
 import torch
-import utils
+from .. import utils
+from scipy.io import savemat
 
 Mesh, DEC, delta = utils.init('geodesic-distance')
 
@@ -23,4 +24,4 @@ result = {
     'phi': phi.cpu().numpy()
 }
 
-utils.savemat('result.mat', result)
+savemat('result.mat', result)
