@@ -12,6 +12,13 @@ Perform `pip3 install -r requirements.txt`, making sure that pip is the one belo
 
 Then, install `torch` by running the command given on [PyTorch's website](https://pytorch.org/get-started/locally/) after selecting your desired options, making sure to select a CUDA version compatible with your device.
 
+## Running Solvers
+
+1. From root of project, perform `cd src` in order to move into src directory.
+2. Make sure `\src` has a `data.mat` file with the required operators.
+3. Perform python solvers/{name of the specific solver}.py
+4. Find the produced `result.mat` file inside `\src`, making sure to save it elsewhere if needed, since calling another solver rewrites the file.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
