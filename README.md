@@ -14,10 +14,9 @@ Then, install `torch` by running the command given on [PyTorch's website](https:
 
 ## Running Solvers
 
-1. From root of project, perform `cd src` in order to move into src directory.
-2. Make sure `\src` has a `data.mat` file with the required operators.
-3. Perform `python solvers/{name of the specific solver}.py`.
-4. Find the produced `result.mat` file inside `\src`, making sure to save it elsewhere if needed, since calling another solver rewrites the file.
+1. Make sure the root of the package has a `data.mat` file with the required operators.
+2. Perform `python -m src.solvers.{desired solver}` from the root of the package.
+3. Find the produced `result.mat` file at the root of the package, making sure to save it elsewhere if needed, since calling another solver rewrites the file.
 
 ## License
 
