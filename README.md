@@ -29,7 +29,7 @@ Geometry-Processing-Sparse-GPU-Solvers/
 - `geodesic-distance.py` computes the geodesic distance using the heat method on a surface mesh.
 - `vector-field-decomposition.py` computes the hodge decomposition of a vector field on a surface mesh.
 - `trivial-connections.py` computes a smooth 1-form vector field using the trivial connections algorithm on a surface mesh (direction field design).
-- `build-field.py` builds the direction field using the resulting trivial connections on a surface mesh (direction field design).
+- `build-field.py` builds the direction field using alpha from the resulting trivial connections on a surface mesh (direction field design).
 
 ## Running Solvers
 1. Make sure the root of the package has a `data.mat` file with the required operators.
