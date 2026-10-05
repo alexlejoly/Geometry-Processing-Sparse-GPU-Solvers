@@ -6,7 +6,6 @@ Developed under the supervision of Prof. Sylvain Baillet at the Montréal Neurol
 Based on the `poisson-problem`, `geodesic-distance`, `vector-field-decomposition` and `direction-field-design` projects developed by GeometryCollective in [geometry-processing-js](https://github.com/GeometryCollective/geometry-processing-js/tree/master).
 
 ## Project structure
-
 ```
 Geometry-Processing-Sparse-GPU-Solvers/
 ├── src/
@@ -24,12 +23,16 @@ Geometry-Processing-Sparse-GPU-Solvers/
 ```
 
 ### Available solvers
-
 - `poisson.py` solves a scalar poisson problem on a surface mesh.
 - `geodesic-distance.py` computes the geodesic distance using the heat method on a surface mesh.
 - `vector-field-decomposition.py` computes the hodge decomposition of a vector field on a surface mesh.
 - `trivial-connections.py` computes a smooth 1-form vector field using the trivial connections algorithm on a surface mesh (direction field design).
 - `build-field.py` builds the direction field using alpha from the resulting trivial connections on a surface mesh (direction field design).
+
+## Installation of dependencies
+1. Make sure to use a python version >= 3.10.
+2. Perform `python -m pip install -r requirements.txt` from the root of the package, making sure to use the correct python executable.
+3. Then, install `torch` by running the command given on [PyTorch's website](https://pytorch.org/get-started/locally/) after selecting your desired options, making sure to select a CUDA version compatible with your device, to replace `pip3` with `python -m pip`, and to use the correct python executable.
 
 ## Running Solvers
 1. Make sure the root of the package has a `data.mat` file with the required operators.
