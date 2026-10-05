@@ -1,7 +1,35 @@
 # Geometry Processing Sparse GPU Solvers
-Python Library of Sparse GPU Solvers for Geometry Processing developed in the context of the [COMP 401 course](https://coursecatalogue.mcgill.ca/archive/2025-2026/courses/comp-401/index.html) at McGill University, Montréal, QC (Project in Computer Science and Biology).
+Python Library of Sparse GPU-Accelerated Solvers for Geometry Processing developed in the context of the [COMP 401 course](https://coursecatalogue.mcgill.ca/archive/2025-2026/courses/comp-401/index.html) at McGill University, Montréal, QC (Project in Computer Science and Biology).
 
 Developed under the supervision of Prof. Sylvain Baillet at the Montréal Neurological Institute-Hospital.
+
+Based on the `poisson-problem`, `geodesic-distance`, `vector-field-decomposition` and `direction-field-design` projects developed by GeometryCollective in [geometry-processing-js](https://github.com/GeometryCollective/geometry-processing-js/tree/master).
+
+## Project structure
+
+```
+Geometry-Processing-Sparse-GPU-Solvers/
+├── src/
+│   ├── utils.py
+│   └── solvers/
+│       ├── poisson.py                                  
+│       ├── geodesic-distance.py       
+│       ├── vector-field-decomposition.py
+│       ├── trivial-connections.py
+│       └── build-field.py
+├── .gitignore
+├── LICENSE
+├── README.md
+└── requirements.txt
+```
+
+### Available solvers
+
+-`poisson.py` solves a scalar poisson problem on a surface mesh.
+-`geodesic-distance.py` computes the geodesic distance using the heat method on a surface mesh.
+-`vector-field-decomposition.py` computes the hodge decomposition of a vector field on a surface mesh.
+-`trivial-connections.py` computes a smooth 1-form vector field using the trivial connections algorithm on a surface mesh (direction field design).
+-`build-field.py` builds the direction field using the resulting trivial connections on a surface mesh (direction field design).
 
 ## Running Solvers
 1. Make sure the root of the package has a `data.mat` file with the required operators.
