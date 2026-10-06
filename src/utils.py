@@ -29,8 +29,8 @@ def buildHodge1(Mesh):
     cotan_per_edge.scatter_add_(0, Mesh.F_E.flatten(), cotan.flatten())
     cotan_per_edge /= 2
 
-    indices = torch.arange(Mesh.E.shape[0], device="cuda")
-    return torch.sparse_coo_tensor(torch.stack([indices, indices]), cotan_per_edge, dtype=torch.float64)
+    indices = torch.arange(Mesh.E.shape[0], dtype=torch.float64, device="cuda")
+    return torch.sparse_coo_tensor(torch.stack([indices, indices]), cotan_per_edge)
 
 def buildD0(Mesh):
     row = torch.arange(Mesh.E.shape[0], device="cuda").repeat_interleave(2)
