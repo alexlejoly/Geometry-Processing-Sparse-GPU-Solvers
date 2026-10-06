@@ -16,7 +16,10 @@ def buildEdgesMatrix(Mesh):
     sorted_e, _ = torch.sort(e, dim=2)
     sorted_e = sorted_e.reshape(-1, 2)
 
+    #E = Edges matrix
     E, inverse = torch.unique(sorted_e, return_inverse=True, dim=0)
+
+    #Face to edges matrix (Each face has 3 edges that make it up)
     F_E = inverse.reshape(-1, 3)
 
     return E, F_E
@@ -97,10 +100,13 @@ def angleSum(Mesh):
 
 def cholesky(pdM, rhs):
     x = torch.zeros_like(rhs)
+
+    #Cholespy requires coalesced matrices
     coalesced_pdM = pdM.coalesce()
 
     llt = CholeskySolverD(pdM.shape[0], coalesced_pdM.indices()[0], coalesced_pdM.indices()[1], coalesced_pdM.values(), MatrixType.COO)
 
+    #cholespy's solve method only works with batches containing a max of 128 instances, this loop simply takes batches of 128 at a time from a rhs with batch size > 128 and constructs one resulting matrix of the correct batch size  
     for i in range(0, rhs.shape[1], 128):
         temp_x = x[:,i:i+128].contiguous()
         llt.solve(rhs[:,i:i+128].contiguous(), temp_x)
@@ -124,7 +130,10 @@ def satisfyGaussBonnet(Mesh, singularity):
         print('Singularities do not add up to the euler characteristic of the mesh', file=sys.stderr)
         sys.exit(2)
 
+#Packs all the required DEC and Mesh operators, and inputs, and each solver calls this function at the top of the file in order to separate this from the logic of the solvers' algorithms itself
 def init(solver):
+
+    #data.mat needs to be at the root
     data = loadmat('./data.mat')
     Mesh = SimpleNamespace()
     DEC = SimpleNamespace()
@@ -234,6 +243,8 @@ def init(solver):
         cross_norm = cross.norm(dim=1, keepdim=True)
         Mesh.face_normal = cross / cross_norm
 
+        #due to the difficulty of accelerating parts of the direction field design algorithm, what comes after trivial connections 
+        #simply needs to be performed using geometry-processing-js's logic on CPU, and the resulting alpha can be fed to this build-field GPU solver, since build-field can be acelerated
         alpha_scipy = data['alpha']
         alpha = torch.from_numpy(alpha_scipy).to(torch.float64).to("cuda")
 
