@@ -30,7 +30,7 @@ Geometry-Processing-Sparse-GPU-Solvers/
 - `build-field.py` builds the direction field using alpha from the resulting trivial connections on a surface mesh (direction field design).
 
 ## Installation of dependencies
-1. Make sure to use a python version >= 3.10.
+1. Make sure to use a python version >= 3.12.
 2. Perform `python -m pip install -r requirements.txt` from the root of the package, making sure to use the correct python executable.
 3. Then, install `torch` by running the command given on [PyTorch's website](https://pytorch.org/get-started/locally/) after selecting your desired options, making sure to select a CUDA version compatible with your device, to replace `pip3` with `python -m pip`, and to use the correct python executable.
 
