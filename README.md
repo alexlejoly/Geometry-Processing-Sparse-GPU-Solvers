@@ -3,7 +3,7 @@ Python Library of Sparse GPU-Accelerated Solvers for Geometry Processing develop
 
 Developed under the supervision of Prof. Sylvain Baillet at the Montréal Neurological Institute-Hospital.
 
-Based on the `poisson-problem`, `geodesic-distance`, `vector-field-decomposition` and `direction-field-design` projects developed by GeometryCollective in [geometry-processing-js](https://github.com/GeometryCollective/geometry-processing-js/tree/master).
+Based on the `poisson-problem`, `geodesic-distance`, `vector-field-decomposition` and `direction-field-design` projects algorithms (not code) developed by GeometryCollective in [geometry-processing-js](https://github.com/GeometryCollective/geometry-processing-js/tree/master).
 
 ## Project structure
 ```
