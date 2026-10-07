@@ -28,17 +28,17 @@ def buildHodge1(Mesh):
     cotan1, cotan2, cotan3 = buildCotans(Mesh)
     cotan = torch.cat([cotan1, cotan2, cotan3], dim=1)
 
-    cotan_per_edge = torch.zeros(Mesh.E.shape[0], dtype=torch.float64, device="cuda")
+    cotan_per_edge = torch.zeros(Mesh.E.shape[0], dtype=torch.float64, device='cuda')
     cotan_per_edge.scatter_add_(0, Mesh.F_E.flatten(), cotan.flatten())
     cotan_per_edge /= 2
 
-    indices = torch.arange(Mesh.E.shape[0], dtype=torch.float64, device="cuda")
+    indices = torch.arange(Mesh.E.shape[0], dtype=torch.float64, device='cuda')
     return torch.sparse_coo_tensor(torch.stack([indices, indices]), cotan_per_edge)
 
 def buildD0(Mesh):
-    row = torch.arange(Mesh.E.shape[0], device="cuda").repeat_interleave(2)
+    row = torch.arange(Mesh.E.shape[0], device='cuda').repeat_interleave(2)
     col = Mesh.E.flatten()
-    data = torch.tensor([1,-1], device="cuda").repeat(Mesh.E.shape[0])
+    data = torch.tensor([1,-1], device='cuda').repeat(Mesh.E.shape[0])
 
     return torch.sparse_coo_tensor(torch.stack([row, col], dim=0), data, dtype=torch.float64)
 
@@ -66,7 +66,7 @@ def divX(Mesh, x):
     contri3 = cotan3 * dot(Mesh.h3, x) + cotan2 * dot(-Mesh.h2, x)
     contributions = torch.cat([contri1, contri2, contri3], dim=-1)
 
-    div = torch.zeros((Mesh.V.shape[0], x.shape[0]), dtype=torch.float64, device="cuda")
+    div = torch.zeros((Mesh.V.shape[0], x.shape[0]), dtype=torch.float64, device='cuda')
     div.scatter_add_(0, Mesh.F.reshape(-1,1).expand(-1, x.shape[0]), contributions.permute(1, 2, 0).reshape(-1, x.shape[0]))
     div /= -2
     
@@ -92,7 +92,7 @@ def angleSum(Mesh):
     angle3 = angle(Mesh.h2, Mesh.h3)
     angles = torch.cat([angle1, angle2, angle3], dim=1)
 
-    angleSum = torch.zeros(Mesh.V.shape[0], dtype=torch.float64, device="cuda")
+    angleSum = torch.zeros(Mesh.V.shape[0], dtype=torch.float64, device='cuda')
     angleSum.scatter_add_(0, Mesh.F.flatten(), angles.flatten())
     angleSum = angleSum.reshape(-1,1)
 
@@ -142,14 +142,14 @@ def init(solver):
         A_scipy = data['A']
         A_scipy += 1e-8 * eye(A_scipy.shape[0], format=A_scipy.format)
         A_scipy = A_scipy.tocoo()
-        DEC.A = torch.sparse_coo_tensor(numpy.array([A_scipy.row, A_scipy.col]), A_scipy.data, dtype=torch.float64, device="cuda")
+        DEC.A = torch.sparse_coo_tensor(numpy.array([A_scipy.row, A_scipy.col]), A_scipy.data, dtype=torch.float64, device='cuda')
 
         M_scipy = data['M']
         M_scipy = M_scipy.tocoo()
-        DEC.M = torch.sparse_coo_tensor(numpy.array([M_scipy.row, M_scipy.col]), M_scipy.data, dtype=torch.float64, device="cuda") / 9216
+        DEC.M = torch.sparse_coo_tensor(numpy.array([M_scipy.row, M_scipy.col]), M_scipy.data, dtype=torch.float64, device='cuda') / 9216
 
         rho_scipy = data['rho']
-        rho = torch.from_numpy(rho_scipy).to(dtype='torch.float64', device='cuda')
+        rho = torch.from_numpy(rho_scipy).to(dtype=torch.float64, device='cuda')
 
         return DEC, rho
     
@@ -157,17 +157,17 @@ def init(solver):
         A_scipy = data['A']
         A_scipy += 1e-8 * eye(A_scipy.shape[0], format=A_scipy.format)
         A_scipy = A_scipy.tocoo()
-        DEC.A = torch.sparse_coo_tensor(numpy.array([A_scipy.row, A_scipy.col]), A_scipy.data, dtype=torch.float64, device="cuda")
+        DEC.A = torch.sparse_coo_tensor(numpy.array([A_scipy.row, A_scipy.col]), A_scipy.data, dtype=torch.float64, device='cuda')
 
         M_scipy = data['M']
         M_scipy = M_scipy.tocoo()
-        DEC.M = torch.sparse_coo_tensor(numpy.array([M_scipy.row, M_scipy.col]), M_scipy.data, dtype=torch.float64, device="cuda") / 9216
+        DEC.M = torch.sparse_coo_tensor(numpy.array([M_scipy.row, M_scipy.col]), M_scipy.data, dtype=torch.float64, device='cuda') / 9216
 
         V_scipy = data['V']
-        Mesh.V = torch.from_numpy(V_scipy).to(dtype='torch.float64', device='cuda') / 96
+        Mesh.V = torch.from_numpy(V_scipy).to(dtype=torch.float64, device='cuda') / 96
 
         F_scipy = data['F']
-        Mesh.F = torch.from_numpy(F_scipy).to(dtype='torch.float64', device='cuda') - 1
+        Mesh.F = torch.from_numpy(F_scipy).to(dtype=torch.int32, device='cuda') - 1
 
         Mesh.E, _ = buildEdgesMatrix(Mesh)
 
@@ -177,7 +177,7 @@ def init(solver):
         Mesh.face_normal = cross / Mesh.cross_norm
 
         delta_scipy = data['delta']
-        delta = torch.from_numpy(delta_scipy).to(dtype='torch.float64', device='cuda')
+        delta = torch.from_numpy(delta_scipy).to(dtype=torch.float64, device='cuda')
 
         return Mesh, DEC, delta
     
@@ -185,13 +185,13 @@ def init(solver):
         A_scipy = data['A']
         A_scipy += 1e-8 * eye(A_scipy.shape[0], format=A_scipy.format)
         A_scipy = A_scipy.tocoo()
-        DEC.A = torch.sparse_coo_tensor(numpy.array([A_scipy.row, A_scipy.col]), A_scipy.data, dtype=torch.float64, device="cuda")
+        DEC.A = torch.sparse_coo_tensor(numpy.array([A_scipy.row, A_scipy.col]), A_scipy.data, dtype=torch.float64, device='cuda')
 
         V_scipy = data['V']
-        Mesh.V = torch.from_numpy(V_scipy).to(dtype='torch.float64', device='cuda') / 96
+        Mesh.V = torch.from_numpy(V_scipy).to(dtype=torch.float64, device='cuda') / 96
 
         F_scipy = data['F']
-        Mesh.F = torch.from_numpy(F_scipy).to(dtype='torch.float64', device='cuda') - 1
+        Mesh.F = torch.from_numpy(F_scipy).to(dtype=torch.int32, device='cuda') - 1
 
         Mesh.h1, Mesh.h2, Mesh.h3 = buildHalfEdgeVectors(Mesh)
         cross = torch.linalg.cross(-Mesh.h3, Mesh.h1)
@@ -202,7 +202,7 @@ def init(solver):
         DEC.hodge1 = buildHodge1(Mesh)
 
         omega_scipy = data['omega']
-        omega = torch.from_numpy(omega_scipy).to(dtype='torch.float64', device='cuda')
+        omega = torch.from_numpy(omega_scipy).to(dtype=torch.float64, device='cuda')
 
         return Mesh, DEC, omega
     
@@ -210,13 +210,13 @@ def init(solver):
         A_scipy = data['A']
         A_scipy += 1e-8 * eye(A_scipy.shape[0], format=A_scipy.format)
         A_scipy = A_scipy.tocoo()
-        DEC.A = torch.sparse_coo_tensor(numpy.array([A_scipy.row, A_scipy.col]), A_scipy.data, dtype=torch.float64, device="cuda")
+        DEC.A = torch.sparse_coo_tensor(numpy.array([A_scipy.row, A_scipy.col]), A_scipy.data, dtype=torch.float64, device='cuda')
 
         V_scipy = data['V']
-        Mesh.V = torch.from_numpy(V_scipy).to(dtype='torch.float64', device='cuda') / 96
+        Mesh.V = torch.from_numpy(V_scipy).to(dtype=torch.float64, device='cuda') / 96
 
         F_scipy = data['F']
-        Mesh.F = torch.from_numpy(F_scipy).to(dtype='torch.float64', device='cuda') - 1
+        Mesh.F = torch.from_numpy(F_scipy).to(dtype=torch.int32, device='cuda') - 1
 
         Mesh.h1, Mesh.h2, Mesh.h3 = buildHalfEdgeVectors(Mesh)
         cross = torch.linalg.cross(-Mesh.h3, Mesh.h1)
@@ -227,16 +227,16 @@ def init(solver):
         DEC.hodge1 = buildHodge1(Mesh)
 
         singularity_scipy = data['singularity']
-        singularity = torch.from_numpy(singularity_scipy).to(dtype='torch.float64', device='cuda')
+        singularity = torch.from_numpy(singularity_scipy).to(dtype=torch.float64, device='cuda')
 
         return Mesh, DEC, singularity
     
     if solver == 'build-field':
         V_scipy = data['V']
-        Mesh.V = torch.from_numpy(V_scipy).to(dtype='torch.float64', device='cuda') / 96
+        Mesh.V = torch.from_numpy(V_scipy).to(dtype=torch.float64, device='cuda') / 96
 
         F_scipy = data['F']
-        Mesh.F = torch.from_numpy(F_scipy).to(dtype='torch.float64', device='cuda') - 1
+        Mesh.F = torch.from_numpy(F_scipy).to(dtype=torch.int32, device='cuda') - 1
 
         Mesh.h1, Mesh.h2, Mesh.h3 = buildHalfEdgeVectors(Mesh)
         cross = torch.linalg.cross(-Mesh.h3, Mesh.h1)
@@ -246,6 +246,6 @@ def init(solver):
         #due to the difficulty of accelerating parts of the direction field design algorithm, what comes after trivial connections 
         #simply needs to be performed using geometry-processing-js's logic on CPU, and the resulting alpha can be fed to this build-field GPU solver, since build-field can be acelerated
         alpha_scipy = data['alpha']
-        alpha = torch.from_numpy(alpha_scipy).to(dtype='torch.float64', device='cuda')
+        alpha = torch.from_numpy(alpha_scipy).to(dtype=torch.float64, device='cuda')
 
         return Mesh, alpha
