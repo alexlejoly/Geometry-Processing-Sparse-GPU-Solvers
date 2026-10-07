@@ -149,7 +149,7 @@ def init(solver):
         DEC.M = torch.sparse_coo_tensor(numpy.array([M_scipy.row, M_scipy.col]), M_scipy.data, dtype=torch.float64, device="cuda") / 9216
 
         rho_scipy = data['rho']
-        rho = torch.from_numpy(rho_scipy).to(torch.float64).to("cuda")
+        rho = torch.from_numpy(rho_scipy).to(dtype='torch.float64', device='cuda')
 
         return DEC, rho
     
@@ -164,10 +164,10 @@ def init(solver):
         DEC.M = torch.sparse_coo_tensor(numpy.array([M_scipy.row, M_scipy.col]), M_scipy.data, dtype=torch.float64, device="cuda") / 9216
 
         V_scipy = data['V']
-        Mesh.V = torch.from_numpy(V_scipy).to(torch.float64).to("cuda") / 96
+        Mesh.V = torch.from_numpy(V_scipy).to(dtype='torch.float64', device='cuda') / 96
 
         F_scipy = data['F']
-        Mesh.F = torch.from_numpy(F_scipy).to(torch.int32).to("cuda") - 1
+        Mesh.F = torch.from_numpy(F_scipy).to(dtype='torch.float64', device='cuda') - 1
 
         Mesh.E, _ = buildEdgesMatrix(Mesh)
 
@@ -177,7 +177,7 @@ def init(solver):
         Mesh.face_normal = cross / Mesh.cross_norm
 
         delta_scipy = data['delta']
-        delta = torch.from_numpy(delta_scipy).to(torch.float64).to("cuda")
+        delta = torch.from_numpy(delta_scipy).to(dtype='torch.float64', device='cuda')
 
         return Mesh, DEC, delta
     
@@ -188,10 +188,10 @@ def init(solver):
         DEC.A = torch.sparse_coo_tensor(numpy.array([A_scipy.row, A_scipy.col]), A_scipy.data, dtype=torch.float64, device="cuda")
 
         V_scipy = data['V']
-        Mesh.V = torch.from_numpy(V_scipy).to(torch.float64).to("cuda") / 96
+        Mesh.V = torch.from_numpy(V_scipy).to(dtype='torch.float64', device='cuda') / 96
 
         F_scipy = data['F']
-        Mesh.F = torch.from_numpy(F_scipy).to(torch.int32).to("cuda") - 1
+        Mesh.F = torch.from_numpy(F_scipy).to(dtype='torch.float64', device='cuda') - 1
 
         Mesh.h1, Mesh.h2, Mesh.h3 = buildHalfEdgeVectors(Mesh)
         cross = torch.linalg.cross(-Mesh.h3, Mesh.h1)
@@ -202,7 +202,7 @@ def init(solver):
         DEC.hodge1 = buildHodge1(Mesh)
 
         omega_scipy = data['omega']
-        omega = torch.from_numpy(omega_scipy).to(torch.float64).to("cuda")
+        omega = torch.from_numpy(omega_scipy).to(dtype='torch.float64', device='cuda')
 
         return Mesh, DEC, omega
     
@@ -213,10 +213,10 @@ def init(solver):
         DEC.A = torch.sparse_coo_tensor(numpy.array([A_scipy.row, A_scipy.col]), A_scipy.data, dtype=torch.float64, device="cuda")
 
         V_scipy = data['V']
-        Mesh.V = torch.from_numpy(V_scipy).to(torch.float64).to("cuda") / 96
+        Mesh.V = torch.from_numpy(V_scipy).to(dtype='torch.float64', device='cuda') / 96
 
         F_scipy = data['F']
-        Mesh.F = torch.from_numpy(F_scipy).to(torch.int32).to("cuda") - 1
+        Mesh.F = torch.from_numpy(F_scipy).to(dtype='torch.float64', device='cuda') - 1
 
         Mesh.h1, Mesh.h2, Mesh.h3 = buildHalfEdgeVectors(Mesh)
         cross = torch.linalg.cross(-Mesh.h3, Mesh.h1)
@@ -227,16 +227,16 @@ def init(solver):
         DEC.hodge1 = buildHodge1(Mesh)
 
         singularity_scipy = data['singularity']
-        singularity = torch.from_numpy(singularity_scipy).to(torch.float64).to("cuda")
+        singularity = torch.from_numpy(singularity_scipy).to(dtype='torch.float64', device='cuda')
 
         return Mesh, DEC, singularity
     
     if solver == 'build-field':
         V_scipy = data['V']
-        Mesh.V = torch.from_numpy(V_scipy).to(torch.float64).to("cuda") / 96
+        Mesh.V = torch.from_numpy(V_scipy).to(dtype='torch.float64', device='cuda') / 96
 
         F_scipy = data['F']
-        Mesh.F = torch.from_numpy(F_scipy).to(torch.int32).to("cuda") - 1
+        Mesh.F = torch.from_numpy(F_scipy).to(dtype='torch.float64', device='cuda') - 1
 
         Mesh.h1, Mesh.h2, Mesh.h3 = buildHalfEdgeVectors(Mesh)
         cross = torch.linalg.cross(-Mesh.h3, Mesh.h1)
@@ -246,6 +246,6 @@ def init(solver):
         #due to the difficulty of accelerating parts of the direction field design algorithm, what comes after trivial connections 
         #simply needs to be performed using geometry-processing-js's logic on CPU, and the resulting alpha can be fed to this build-field GPU solver, since build-field can be acelerated
         alpha_scipy = data['alpha']
-        alpha = torch.from_numpy(alpha_scipy).to(torch.float64).to("cuda")
+        alpha = torch.from_numpy(alpha_scipy).to(dtype='torch.float64', device='cuda')
 
         return Mesh, alpha
