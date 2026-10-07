@@ -32,15 +32,15 @@ def buildHodge1(Mesh):
     cotan_per_edge.scatter_add_(0, Mesh.F_E.flatten(), cotan.flatten())
     cotan_per_edge /= 2
 
-    indices = torch.arange(Mesh.E.shape[0], dtype=torch.float64, device='cuda')
+    indices = torch.arange(Mesh.E.shape[0], device='cuda')
     return torch.sparse_coo_tensor(torch.stack([indices, indices]), cotan_per_edge)
 
 def buildD0(Mesh):
     row = torch.arange(Mesh.E.shape[0], device='cuda').repeat_interleave(2)
     col = Mesh.E.flatten()
-    data = torch.tensor([1,-1], device='cuda').repeat(Mesh.E.shape[0])
+    data = torch.tensor([1,-1], dtype=torch.float64, device='cuda').repeat(Mesh.E.shape[0])
 
-    return torch.sparse_coo_tensor(torch.stack([row, col], dim=0), data, dtype=torch.float64)
+    return torch.sparse_coo_tensor(torch.stack([row, col], dim=0), data)
 
 def buildFlowMatrix(Mesh, DEC):
     mean_edge_length = torch.linalg.norm(Mesh.V[Mesh.E[:,0]] - Mesh.V[Mesh.E[:,1]], dim=1).mean()
